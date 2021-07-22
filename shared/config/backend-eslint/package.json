@@ -1,0 +1,14 @@
+{
+  "name": "@jembi/eslint-config-backend",
+  "version": "1.0.0",
+  "description": "Shared eslint config for back-end apps",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "echo \"no build\"",
+    "test": "echo \"no tests\""
+  },
+  "devDependencies": {
+    "@jembi/prettier-config": "^1.0.0"
+  }
+}
