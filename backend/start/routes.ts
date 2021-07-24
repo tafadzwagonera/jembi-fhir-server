@@ -20,4 +20,10 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', async () => ({ hello: 'world' }))
+Route.get('/ping', async () => 'pong')
+
+Route.group(() => {
+  Route.get('/', async ({ response }) => response.status(200).json({ statusCode: 200, method: 'GET' }))
+  Route.post('/', async ({ response }) => response.status(200).json({ statusCode: 200, method: 'POST' }))
+})
+  .prefix('/Observations')
