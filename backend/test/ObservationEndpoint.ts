@@ -1,7 +1,7 @@
 import test from 'japa'
 import { Response } from 'supertest'
 
-// const BASE_URL: string = 'https://127.0.0.1'
+// const BASE_URL: string = 'https://127.0.0.1/v1'
 
 test.group('Observation Endpoint', async (group) => {
   // const path: string = '/Observations'
