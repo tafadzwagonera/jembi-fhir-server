@@ -23,7 +23,12 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.get('/ping', async () => 'pong')
 
 Route.group(() => {
-  Route.get('/', async ({ response }) => response.status(200).json({ statusCode: 200, method: 'GET' }))
-  Route.post('/', async ({ response }) => response.status(200).json({ statusCode: 200, method: 'POST' }))
+  Route.group(() => {
+    Route.get('/', 'ObservationsController.show')
+    Route.post('/', 'ObservationsController.create')
+    Route.put('/', 'ObservationsController.update')
+    Route.patch('/', 'ObservationsController.update')
+  })
+    .prefix('/Observations')
 })
-  .prefix('/Observations')
+  .prefix('/v1/')
