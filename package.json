@@ -12,8 +12,8 @@
     "build:backend": "yarn workspace backend build",
     "build": "build:backend && build:frontend",
     "start": "concurrently --kill-others-on-fail \"yarn frontend\" \"yarn backend\"",
-    "lint": "eslint --ext .jsx,.js,.ts .",
-    "lint:fix": "eslint --ext .jsx,.js,.ts --fix .",
+    "lint": "eslint --ext .jsx,.js,.ts,.tsx .",
+    "lint:fix": "eslint --ext .jsx,.js,.ts,.tsx --fix .",
     "security": "yarn audit"
   },
   "dependencies": {
