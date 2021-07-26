@@ -3,7 +3,7 @@ import { Response } from 'supertest'
 
 // const BASE_URL: string = 'https://127.0.0.1/v1'
 
-test.group('Observation Endpoint', async (group) => {
+test.group('Observations Endpoint', async (group) => {
   // const path: string = '/Observations'
   // const timeout: number = 0
   const responseProps: any = {
@@ -13,7 +13,7 @@ test.group('Observation Endpoint', async (group) => {
     body: {},
   }
 
-  let response: Response = {} as Response
+  const response: Response = {} as Response
 
   group.before(async () => {
     Object.entries(responseProps).forEach(([key]) => {
@@ -21,8 +21,8 @@ test.group('Observation Endpoint', async (group) => {
         value: responseProps[key],
         writable: true,
         enumerable: true,
-        configurable: true
-     })
+        configurable: true,
+      })
     })
   })
 

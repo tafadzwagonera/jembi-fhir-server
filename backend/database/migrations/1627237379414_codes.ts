@@ -1,13 +1,13 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class Interpretations extends BaseSchema {
-  protected tableName = 'interpretations'
+export default class Codes extends BaseSchema {
+  protected tableName = 'codes'
 
-  public async up () {
+  public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.integer('codeable_concept_id').unsigned()
-      table.foreign('codeable_concept_id').references('codeable_concepts.id').onDelete('CASCADE')
+      table.text('text')
+      table.integer('observation_id').unsigned().references('observations.id').onDelete('CASCADE')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
@@ -17,7 +17,7 @@ export default class Interpretations extends BaseSchema {
     })
   }
 
-  public async down () {
+  public async down() {
     this.schema.dropTable(this.tableName)
   }
 }

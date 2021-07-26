@@ -1,13 +1,17 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class AppliesTos extends BaseSchema {
-  protected tableName = 'applies_to'
+export default class Codings extends BaseSchema {
+  protected tableName = 'code_codings'
 
-  public async up () {
+  public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.integer('codeable_concept_id').unsigned()
-      table.foreign('codeable_concept_id').references('codeable_concepts.id').onDelete('CASCADE')
+      table.string('system')
+      table.string('version')
+      table.string('symbol')
+      table.string('display')
+      table.string('user_selected')
+      table.integer('code_id').unsigned().references('codes.id').onDelete('CASCADE')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
@@ -17,7 +21,7 @@ export default class AppliesTos extends BaseSchema {
     })
   }
 
-  public async down () {
+  public async down() {
     this.schema.dropTable(this.tableName)
   }
 }
