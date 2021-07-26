@@ -157,7 +157,7 @@ Here's a sample of the adapted request body
 }
 ```
 
-2. It's assumed that data to the ```POST``` endpoint has beeen validated on frontend and therefore can be reasonably realied on
+2. Data to the ```POST``` endpoint has beeen validated on frontend and can be reasonably realied on.
 
 2. Several attributes were ommited from the ```Observation``` model under ```jembi-fhir-server/backend/app/Models/Observation``` to make scope manageable.
 
