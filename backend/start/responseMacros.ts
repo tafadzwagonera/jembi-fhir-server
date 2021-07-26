@@ -2,10 +2,11 @@
 
 import Env from '@ioc:Adonis/Core/Env'
 import Response from '@ioc:Adonis/Core/Response'
-import { error, ok } from '../app/Helpers'
+import ok from '../app/Helpers/ok'
+import error from '../app/Helpers/error'
 const production: string = 'production'
 
-Response.macro('error', function (request, response) {
+Response.macro('error', function (request: any, response: any): any {
   const { statusCode, error: { message, name } } = response
 
   if (Env.get('NODE_ENV') === production) {
@@ -15,7 +16,7 @@ Response.macro('error', function (request, response) {
   return this.status(statusCode).send(error(response))
 })
 
-Response.macro('success', function (request, response) {
+Response.macro('ok', function (request: any, response: any): any {
   const { statusCode, uuid, versionId } = response
 
   if (Env.get('NODE_ENV') === production) {

@@ -6,6 +6,8 @@ export interface ObservationErrorInterface {
 }
 
 export interface ObservationOkResponse {
-  uuid: string
-  versionId
+  statusCode: number
+  uuid?: string
+  versionId?: string
+  data?: any
 }
