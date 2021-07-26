@@ -45,6 +45,6 @@ export default class Observation extends BaseModel {
   @hasMany(() => Interpretation)
   public interpretation: HasMany<typeof Interpretation>
 
-  @hasOne(() => ReferenceRange)
-  public referenceRange: HasOne<typeof ReferenceRange>
+  @hasMany(() => ReferenceRange)
+  public referenceRange: HasMany<typeof ReferenceRange>
 }
