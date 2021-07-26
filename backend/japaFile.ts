@@ -25,7 +25,7 @@ async function startHttpServer() {
 }
 
 function getTestFiles() {
-  let userDefined = process.argv.slice(2)[0]
+  const userDefined = process.argv.slice(2)[0]
   if (!userDefined) {
     return 'test/**/*.spec.ts'
   }
