@@ -24,7 +24,7 @@ Route.get('/ping', async () => 'pong')
 
 Route.group(() => {
   Route.group(() => {
-    Route.get('/', 'ObservationsController.show')
+    Route.get('?category=vital-signs', 'ObservationsController.show')
     Route.post('/', 'ObservationsController.create')
     Route.put('/', 'ObservationsController.update')
     Route.patch('/', 'ObservationsController.update')
