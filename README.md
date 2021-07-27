@@ -204,3 +204,5 @@ Here's a sample of the adapted request body
 6. In the interest of time, the exercise didn't focus developing extensive unit tests and generating seed values for extensive testing.
 
 7. The response has been standardised under ```jembi-fhir-server/backend/contracts/interfaces/ObservationsInterface```
+
+8. ```ReferenceRange``` accepts a single instance of even though it has a ```hasMany``` relationship with the parant model ```Observation```. The first object will be read from the array passed to it **only**.

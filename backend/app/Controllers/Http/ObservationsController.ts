@@ -21,7 +21,7 @@ export default class ObservationsController {
       issued, 
       valueQuantity, 
       interpretation: { coding: interpretationCoding }, 
-      referenceRange: [values, ],
+      referenceRange: [first, ],
     } = request.all()
 
     if (isEmpty(status)) {
@@ -84,7 +84,7 @@ export default class ObservationsController {
     await observation.related('interpretation').save(interpretation)
 
     const referenceRange: any = new ReferenceRange()
-    const { text: referenceRangeText, low, high } = values
+    const { text: referenceRangeText, low, high } = first
 
     if (referenceRangeText && referenceRangeText.trim().length > 0) referenceRange.text =  referenceRangeText
     if (!_.isEmpty(low)) {
