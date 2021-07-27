@@ -65,6 +65,42 @@ yarn lint
 yarn lint:fix
 ```
 
+### Creating a resource
+
+```bash
+curl -L -X POST "http://127.0.0.1:<port>/v1/Observations" \
+-H "Content-Type: application/json" \
+--data-raw '{ "resourceType" : "Observation", ... }'
+```
+
+  Alternatively, you should use an API testing tool like [Postman](https://www.postman.com/) for convenience
+
+  **NB: Remember to use adapted request body sample in the Assumptions about app section.** 
+
+
+### Querying a resource
+
+```bash
+curl -L -X GET "http://127.0.0.1:<port>/v1/Observations?category=vital-signs&code=LOINC"
+```
+
+  Where ```LOINC``` is a string value for the code
+
+  **NB: Multi code search i.e ```...&code=[LOINC{,LOINC2...}] is not implemented** 
+
+```bash
+curl -L -X GET "http://127.0.0.1:<port>/v1/Observations?category=vital-signs&date=[date]"
+```
+
+```bash
+curl -L -X GET "http://127.0.0.1:<port>/v1/Observations?category=vital-signs&date=[date]{&date=[date]}"
+
+```
+
+  The query parameter and value ```?category=vital-signs``` should be added otherwise an error will returned.
+
+  The database needs to populated with sufficient data for running queries against the API.
+
 ## Assumptions about the app
 
 1. The structure of the ```POST``` request body resembles the ```Observation``` resource [here](https://www.hl7.org/fhir/observation.html)
