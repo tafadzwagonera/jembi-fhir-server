@@ -119,10 +119,18 @@ export default class ObservationsController {
      * A date, or partial date (e.g. just year or year + month) as used in human communication. 
      * The format is YYYY, YYYY-MM, or YYYY-MM-DD, e.g. 2018, 1973-06, or 1905-08-23. 
      */
-    const { code, date } = request.qs()
+    const { category, code, date } = request.qs()
+
+    if (!category) {
+      return response.error(request, new ObservationsError({
+        message: 'Missing category query parameter',
+        statusCode: 400,
+      }))
+    }
+
     if (!(code || date)) {
       return response.error(request, new ObservationsError({
-        message: 'Missing category, code or date query parameter',
+        message: 'Missing code or date query parameter',
         statusCode: 400,
       }))
     }
