@@ -86,7 +86,7 @@ curl -L -X GET "http://127.0.0.1:<port>/v1/Observations?category=vital-signs&cod
 
   Where ```LOINC``` is a string value for the code
 
-  **NB: Multi code search i.e ```...&code=[LOINC{,LOINC2...}] is not implemented** 
+  **NB: Multi code search i.e ```...&code=[LOINC{,LOINC2...}]``` is not implemented** 
 
 ```bash
 curl -L -X GET "http://127.0.0.1:<port>/v1/Observations?category=vital-signs&date=[date]"
