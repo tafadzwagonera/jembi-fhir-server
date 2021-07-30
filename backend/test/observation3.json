@@ -1,0 +1,59 @@
+{
+  "identifier": [
+    {
+      "use": "official",
+      "system": "http://www.bmc.nl/zorgportal/identifiers/observations",
+      "value": "6325"
+    }
+  ],
+  "status": "preliminary",
+  "code": {
+    "text": "Negative for Chlamydia Trachomatis rRNA",
+    "coding": [
+      {
+        "system": "http://loinc.org",
+        "symbol": "11557-8",
+        "display": "Carbon dioxide in blood"
+      }
+    ]
+  },
+  "effectivePeriod": {
+    "start": "2019-05-02T10:30:10+01:00",
+    "end": "2019-06-05T10:30:10+01:00"
+  },
+  "issued": "2019-04-03T15:30:10+01:00",
+  "valueQuantity": {
+    "value": 6.2,
+    "unit": "kPa",
+    "system": "http://unitsofmeasure.org",
+    "code": "kPa"
+  },
+  "interpretation": [
+    {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+          "symbol": "H",
+          "display": "High"
+        }
+      ]
+    }
+  ],
+  "referenceRange": [
+    {
+      "text": "Text based reference range in an observation",
+      "low": {
+        "value": 4.8,
+        "unit": "kPa",
+        "system": "http://unitsofmeasure.org",
+        "code": "kPa"
+      },
+      "high": {
+        "value": 6.0,
+        "unit": "kPa",
+        "system": "http://unitsofmeasure.org",
+        "code": "kPa"
+      }
+    }
+  ]
+}
