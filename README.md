@@ -31,7 +31,6 @@ Follow these instructions to get the project up and running:
 
     ```bash
     yarn workspace backend node ace migration:run
-    yarn seed
     ```
 
 5. Start the two apps
