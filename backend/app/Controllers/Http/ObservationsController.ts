@@ -7,8 +7,10 @@ import Interpretation from '../../Models/Interpretation'
 import ReferenceRange from '../../Models/ReferenceRange'
 import { ObservationOkResponse } from '../../../contracts/interfaces/ObservationsInterface'
 import ObservationsError from '../../Helpers/ObservationsError'
-import dateTimeToFormat from '../../Helpers/dateTimeToFormat'
 import isEmpty from '../../Helpers/isEmpty'
+import fetchObservationsByCode from '../../Helpers/fetchObservationsByCode'
+import fetchObservationsByEffectivePeriod from '../../Helpers/fetchObservationsByEffectivePeriod'
+import fetchObservationsByCodeAndEffectivePeriod from '../../Helpers/fetchObservationsByCodeAndEffectivePeriod'
 
 export default class ObservationsController {
   public async create({ response, request }) {
@@ -16,12 +18,12 @@ export default class ObservationsController {
     const { 
       identifier, 
       status, 
-      code: { text: codeText, coding: codeCoding }, 
+      code: { text: codeText, coding: codeCodings }, 
       effectivePeriod, 
       issued, 
-      valueQuantity, 
-      interpretation: { coding: interpretationCoding }, 
-      referenceRange: [first, ],
+      valueQuantity,
+      interpretation: [firstInterpretation, ],
+      referenceRange: [firstReferenceRange, ],
     } = request.all()
 
     if (isEmpty(status)) {
@@ -31,7 +33,7 @@ export default class ObservationsController {
       }))
     }
 
-    if (_.isEmpty(codeCoding)) {
+    if (_.isEmpty(codeCodings)) {
       return response.error(request, new ObservationsError({
         message: 'Missing coding property in request body',
         statusCode: 400,
@@ -57,8 +59,8 @@ export default class ObservationsController {
     const code: any = new Code()
 
     if (codeText && codeText.trim().length > 0) code.text = codeText
-    if (_.isArray(codeCoding) && codeCoding.length >= 1) {
-      await code.related('codeCodings').createMany(codeCoding)
+    if (_.isArray(codeCodings) && codeCodings.length >= 1) {
+      await code.related('coding').createMany(codeCodings)
     }
 
     await observation.related('code').save(code)
@@ -77,14 +79,17 @@ export default class ObservationsController {
     }
 
     const interpretation: any = new Interpretation()
-    if (_.isArray(interpretationCoding) && interpretationCoding.length >= 1) {
-      await interpretation.related('coding').createMany(interpretationCoding)
+
+    if (!_.isEmpty(firstInterpretation)) {
+      const { coding: interpretationCodings }  = firstInterpretation
+
+      await interpretation.related('coding').createMany(interpretationCodings)
     }
 
     await observation.related('interpretation').save(interpretation)
 
     const referenceRange: any = new ReferenceRange()
-    const { text: referenceRangeText, low, high } = first
+    const { text: referenceRangeText, low, high } = firstReferenceRange
 
     if (referenceRangeText && referenceRangeText.trim().length > 0) referenceRange.text =  referenceRangeText
     if (!_.isEmpty(low)) {
@@ -135,43 +140,26 @@ export default class ObservationsController {
       }))
     }
 
-    let start: string = ''
+    let start: string = date
     let end: string = ''
 
     if (_.isArray(date)) {
       [start, end] = date
     }
 
-    const observations: any = await Observation.query()
-      .preload('text')
-      .preload('identifiers')
-      .preload('code', (query) => {
-        if (code) {
-          query.preload('codeCodings', (codeCodingsQuery) => {
-            codeCodingsQuery.where('symbol', '=', code)
-          })
-        }
-      })
-      .preload('effectivePeriod', (query) => {
-        if (start) {
-          query
-          .where('start', '>=', dateTimeToFormat(start))
-        }
+    let observations: any = {}
 
-        if (start && end) {
-          query
-          .where('start', '>=', dateTimeToFormat(start))
-          .where('end', '<=', dateTimeToFormat(end))
-        }
-      })
-      .preload('valueQuantity')
-      .preload('interpretation', (query) => {
-        query.preload('coding')
-      })
-      .preload('referenceRange', (query) => {
-        query.preload('low')
-        query.preload('high')
-      })
+    if (code) {
+      observations = await fetchObservationsByCode(code)
+    }
+
+    if (date) {
+      observations = await fetchObservationsByEffectivePeriod(start, end)
+    }
+
+    if (code && date) {
+      observations = await fetchObservationsByCodeAndEffectivePeriod(code, start, end)
+    }
 
     const serializeOptions: any = {
       fields: {
