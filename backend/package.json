@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "node ace build --production --ignore-ts-errors",
-    "start": "node server.js",
+    "start": "node ./build/server.js",
     "dev": "node ace serve",
     "dev:watch": "node ace serve --watch",
     "test": "node -r @adonisjs/assembler/build/register japaFile.ts"
