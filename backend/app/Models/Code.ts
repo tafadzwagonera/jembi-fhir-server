@@ -23,5 +23,5 @@ export default class Code extends BaseModel {
   public observation: BelongsTo<typeof Observation>
 
   @hasMany(() => CodeCoding)
-  public codeCodings: HasMany<typeof CodeCoding>
+  public coding: HasMany<typeof CodeCoding>
 }
